@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Mutall</string>
+    <string name="account_type">Account Type</string>
+    <string-array name="accounts">
+        <item>All Accounts</item>
+        <item>Accounts with no reading</item>
+    </string-array>
 </resources>
