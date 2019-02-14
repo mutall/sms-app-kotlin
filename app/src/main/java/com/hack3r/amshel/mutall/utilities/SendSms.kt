@@ -28,8 +28,7 @@ class SendSms(val array: JSONArray):Thread(), Runnable{
             }catch (e:InterruptedException){
                 e.printStackTrace()
             }
+            msgLen ++
         }
-
-        msgLen ++
     }
 }
