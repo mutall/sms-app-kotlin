@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.hack3r.amshel.mutall.R
-import com.hack3r.amshel.mutall.models.Message
+import com.hack3r.amshel.mutall.models.MessageObject
 
-class SmsAdapter(val context: Context, val messages:List<Message>) : BaseAdapter(){
+class SmsAdapter(val context: Context, val messages:List<MessageObject>) : BaseAdapter(){
 
     override fun getItemId(position: Int): Long {
         return 0

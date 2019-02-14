@@ -96,6 +96,7 @@ class Library//constructor
                 dialog.setButtonText("okay")
                 dialog.setErrorButtonClick { }
                 dialog.show()
+
             }
 
             "success" -> AwesomeSuccessDialog(context)
