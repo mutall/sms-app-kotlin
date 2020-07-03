@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".controllers.Accounts"></activity>
+        <activity android:name=".controllers.WebView"></activity>
     </application>
 
 </manifest>

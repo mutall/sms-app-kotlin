@@ -67,9 +67,13 @@ class MainActivity : AppCompatActivity() {
             alertDialog.create().show()
         }
 
+        browser.setOnClickListener {
+            startActivity( Intent(Intent.ACTION_VIEW, Uri.parse(MUTALL_URL)))
+        }
+
     }
 
-    fun retrieveAccounts(url:String?){
+    private fun retrieveAccounts(url:String?){
         library.showProgress("fetching")
         val jsonArrayRequest  = JsonArrayRequest(Request.Method.GET, url, null,
                 Response.Listener {response ->
@@ -87,6 +91,8 @@ class MainActivity : AppCompatActivity() {
                                 val intent = Intent(this, Accounts::class.java)
                                 intent.putExtra("json", response.toString())
                                 intent.putExtra("type", "send")
+                                intent.putExtra("key1", "num")
+                                intent.putExtra("key2", "name")
                                 startActivity(intent)
                             }
                             .setNegativeButtonbackgroundColor(R.color.dialogSuccessBackgroundColor)
@@ -99,10 +105,7 @@ class MainActivity : AppCompatActivity() {
                 },
                 Response.ErrorListener {error: VolleyError ->
                     library.dismissProgress()
-                    if(error.networkResponse.statusCode == 500){
-                        library.showDialog(this, "error", "SERVER ERROR", "SOMETHING WRONG HAPPENED ON THE SERVER")
-
-                    }
+                    println(error.message)
                     error.printStackTrace()})
 
         VolleyController.instance.addRequestQueue(jsonArrayRequest)
@@ -113,7 +116,7 @@ class MainActivity : AppCompatActivity() {
      * function for requesting sms permission
      * targeted for android api 23 and above
      */
-    fun requestSmsPermission() {
+    private fun requestSmsPermission() {
         // Here, thisActivity is the current activity
         if (ContextCompat.checkSelfPermission(this,
                         Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
@@ -134,7 +137,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun showInbox(address: String) {
+    private fun showInbox(address: String) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED)
             run { requestReadRequest() }
         val contentResolver = contentResolver
@@ -147,18 +150,20 @@ class MainActivity : AppCompatActivity() {
                 do {
                     val smsNum = smsInboxCursor.getString(indexAddress)
                     val smsBody = smsInboxCursor.getString(indexBody)
-                    var obj = JSONObject()
-                    obj.put("num", smsNum)
-                    obj.put("name", smsBody)
+                    val obj = JSONObject()
+                    obj.put("number", smsNum)
+                    obj.put("body", smsBody)
                     inboxMsg.put(obj)
                 } while (smsInboxCursor.moveToNext())
                 if(inboxMsg.length()>0) {
-                    var intent = Intent(this, Accounts::class.java)
+                    val intent = Intent(this, Accounts::class.java)
                     intent.putExtra("json", inboxMsg.toString())
                     intent.putExtra("type", "upload")
+                    intent.putExtra("key1", "number")
+                    intent.putExtra("key2", "body")
                     startActivity(intent)
                 }else{
-                    library.showToast("No Sms from "+address, "info")
+                    library.showToast("No Sms from $address", "info")
                 }
 
             }

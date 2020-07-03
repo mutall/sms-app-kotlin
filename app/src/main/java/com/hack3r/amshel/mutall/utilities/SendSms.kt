@@ -10,18 +10,18 @@ class SendSms(val array: JSONArray):Thread(), Runnable{
         sendMessages()
     }
 
-    fun sendMessages(){
+    private fun sendMessages(){
         val manager = SmsManager.getDefault()
 
         var msgLen = 0
 
         while (msgLen <= array.length()){
             try {
-                var json = array.getJSONObject(msgLen)
-                var body = json.getString("num")
+                val json = array.getJSONObject(msgLen)
+                val body = json.getString("num")
 
-                var phone = "95551"
-                manager.sendTextMessage(phone, null, body, null, null)
+
+                manager.sendTextMessage(SEND_NUM, null, body, null, null)
                 sleep(5000)
             }catch (e:JSONException){
                 e.printStackTrace()

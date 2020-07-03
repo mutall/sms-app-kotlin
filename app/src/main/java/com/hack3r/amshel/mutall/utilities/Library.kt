@@ -175,7 +175,7 @@ class Library//constructor
         val toAdd = ArrayList<ErrorObject>()
         if (this.errors.size > 0) {
             for (e in this.errors) {
-                if (e.code !== error.code) {
+                if (e.code != error.code) {
                     toAdd.add(error)
                 }
             }

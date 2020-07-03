@@ -14,7 +14,7 @@ class WebView:AppCompatActivity() {
         setContentView(R.layout.activity_webview)
 
         if(intent.hasExtra(RESPONSE)) {
-            var response = intent.getStringExtra(RESPONSE)
+            val response = intent.getStringExtra(RESPONSE)
             val encodedHtml = Base64.encodeToString(response.toByteArray(), Base64.NO_PADDING)
 
             webview.loadData(encodedHtml, "text/html", "base64")
