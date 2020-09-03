@@ -7,6 +7,7 @@ import org.json.JSONException
 class SendSms(val array: JSONArray):Thread(), Runnable{
 
     override fun run() {
+        println("Thread started " +Thread.currentThread().name)
         sendMessages()
     }
 
